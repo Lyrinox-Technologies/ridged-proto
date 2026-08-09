@@ -1,5 +1,12 @@
 # ridged-proto (rdgproto)
 
+`ridged-proto` is the transport and binary framing layer beneath The Lyre. It
+is deliberately protocol-agnostic: each connection uses a byte-sized local
+message-type registry, while Lyre capability routing uses its own envelope so
+services do not need to share one global registry. A connection can therefore
+use up to 256 message type values; this package does not provide a global,
+cross-service message namespace.
+
 **A high-performance, zero-dependency binary protocol framework for Go** — Build custom communication protocols without vendor lock-in. **Faster and more efficient than Protocol Buffers.**
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/LyrinoxTechnologies/ridged-proto.svg)](https://pkg.go.dev/github.com/LyrinoxTechnologies/ridged-proto)
