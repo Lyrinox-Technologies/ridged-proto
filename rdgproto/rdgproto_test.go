@@ -763,8 +763,8 @@ Password: "testpassword123",
 ClientID: "client-abc-123",
 }
 
-b.ResetTimer()
-for i := 0; i < b.N; i++ {
+
+for i := 0; b.Loop(); i++ {
 _, err := MarshalMessage(MsgTypeLogin, uint32(i), payload, nil)
 if err != nil {
 b.Fatal(err)
@@ -780,8 +780,8 @@ ClientID: "client-abc-123",
 }
 data, _ := MarshalMessage(MsgTypeLogin, 1, payload, nil)
 
-b.ResetTimer()
-for i := 0; i < b.N; i++ {
+
+for b.Loop() {
 _, _, err := UnmarshalMessage(data, nil)
 if err != nil {
 b.Fatal(err)
@@ -798,8 +798,8 @@ Password: "testpassword123",
 ClientID: "client-abc-123",
 }
 
-b.ResetTimer()
-for i := 0; i < b.N; i++ {
+
+for i := 0; b.Loop(); i++ {
 _, err := MarshalMessage(MsgTypeLogin, uint32(i), payload, opts)
 if err != nil {
 b.Fatal(err)
@@ -814,9 +814,9 @@ Password: "testpassword123",
 ClientID: "client-abc-123",
 }
 
-b.ResetTimer()
+
 b.ReportAllocs()
-for i := 0; i < b.N; i++ {
+for i := 0; b.Loop(); i++ {
 data, err := MarshalMessage(MsgTypeLogin, uint32(i), payload, nil)
 if err != nil {
 b.Fatal(err)
@@ -837,9 +837,9 @@ Password: "testpassword123",
 ClientID: "client-abc-123",
 }
 
-b.ResetTimer()
+
 b.ReportAllocs()
-for i := 0; i < b.N; i++ {
+for i := 0; b.Loop(); i++ {
 data, err := MarshalMessage(MsgTypeLogin, uint32(i), payload, opts)
 if err != nil {
 b.Fatal(err)
