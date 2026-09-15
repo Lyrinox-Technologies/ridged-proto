@@ -2,14 +2,15 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -30,8 +31,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    # golangci-lint doesn't support Go 1.25 yet, skip for now
-    if: false
+
     steps:
       - uses: actions/checkout@v4
 
@@ -48,12 +48,12 @@ jobs:
   codeql:
     name: CodeQL Analysis
     runs-on: ubuntu-latest
-    # CodeQL requires enabling Code Scanning in repo settings first
-    if: false
+
     permissions:
       actions: read
       contents: read
       security-events: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -74,6 +74,7 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -85,8 +86,6 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          # G104: Unhandled Close() errors in deferred cleanup - errors are non-actionable in cleanup paths
-          # G115: Integer overflow on int64 to uint32 - protocol lengths are validated before conversion
           args: -exclude=G104,G115 ./...
 
       - name: Run govulncheck
