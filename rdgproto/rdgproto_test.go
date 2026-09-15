@@ -300,7 +300,9 @@ listener, err := net.Listen("tcp", "127.0.0.1:0")
 if err != nil {
 t.Fatalf("Failed to create listener: %v", err)
 }
-defer listener.Close()
+defer func() {
+	_ = listener.Close()
+}()
 
 done := make(chan error, 1)
 var receivedMsg *Message
@@ -312,7 +314,9 @@ if err != nil {
 done <- err
 return
 }
-defer conn.Close()
+defer func() {
+	_ = conn.Close()
+}()
 
 proto := NewProtocol(conn, nil)
 receivedMsg, receivedPayload, err = proto.ReceiveMessage()
@@ -323,7 +327,9 @@ clientConn, err := net.Dial("tcp", listener.Addr().String())
 if err != nil {
 t.Fatalf("Failed to connect: %v", err)
 }
-defer clientConn.Close()
+defer func() {
+	_ = clientConn.Close()
+}()
 
 clientProto := NewProtocol(clientConn, nil)
 _, err = clientProto.Send(MsgTypeLogin, &LoginPayload{
@@ -360,7 +366,9 @@ listener, err := net.Listen("tcp", "127.0.0.1:0")
 if err != nil {
 t.Fatalf("Failed to create listener: %v", err)
 }
-defer listener.Close()
+defer func() {
+	_ = listener.Close()
+}()
 
 done := make(chan error, 1)
 var receivedMsg *Message
@@ -372,7 +380,9 @@ if err != nil {
 done <- err
 return
 }
-defer conn.Close()
+defer func() {
+	_ = conn.Close()
+}()
 
 proto := NewProtocol(conn, opts)
 receivedMsg, receivedPayload, err = proto.ReceiveMessage()
@@ -383,7 +393,9 @@ clientConn, err := net.Dial("tcp", listener.Addr().String())
 if err != nil {
 t.Fatalf("Failed to connect: %v", err)
 }
-defer clientConn.Close()
+defer func() {
+	_ = clientConn.Close()
+}()
 
 clientProto := NewProtocol(clientConn, opts)
 _, err = clientProto.Send(MsgTypeResponse, &ResponsePayload{
@@ -622,7 +634,9 @@ listener, err := net.Listen("tcp", "127.0.0.1:0")
 if err != nil {
 t.Fatalf("Failed to create listener: %v", err)
 }
-defer listener.Close()
+defer func() {
+	_ = listener.Close()
+}()
 
 done := make(chan error, 1)
 var receivedMsg *Message
@@ -634,7 +648,9 @@ if err != nil {
 done <- err
 return
 }
-defer conn.Close()
+defer func() {
+	_ = conn.Close()
+}()
 
 proto := NewProtocol(conn, nil)
 receivedMsg, receivedPayload, err = proto.ReceiveMessage()
@@ -645,7 +661,9 @@ clientConn, err := net.Dial("tcp", listener.Addr().String())
 if err != nil {
 t.Fatalf("Failed to connect: %v", err)
 }
-defer clientConn.Close()
+defer func() {
+	_ = clientConn.Close()
+}()
 
 streamCfg := &StreamConfig{
 Threshold: 1024 * 1024, // 1MB threshold
